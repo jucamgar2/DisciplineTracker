@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import backend.disciplinetracker.user.dto.CreateUser;
 import backend.disciplinetracker.user.dto.UserResponse;
 import backend.disciplinetracker.user.service.UserService;
+import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/new")
-    public Mono<UserResponse> createUser(@RequestBody CreateUser user){
+    public Mono<UserResponse> createUser(@Valid @RequestBody CreateUser user){
         return userService.createUser(user);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import backend.disciplinetracker.common.exception.UsernameAlreadyExistsException;
 import backend.disciplinetracker.user.dto.CreateUser;
 import backend.disciplinetracker.user.dto.UserResponse;
 import backend.disciplinetracker.user.mapper.UserMapper;
@@ -22,11 +23,16 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public Mono<UserResponse> createUser(CreateUser createdUser){
-        User user = UserMapper.mapCreateUserToUser(createdUser);
-        user.setId(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user).map(entity->UserMapper.mapUserToUserResponse(entity));
-
+        return userRepository.existsByUsername(createdUser.getUsername())
+            .flatMap(exists->{
+                if(exists){
+                    return Mono.error(new UsernameAlreadyExistsException());
+                }
+                User user = UserMapper.mapCreateUserToUser(createdUser);
+                user.setId(UUID.randomUUID().toString());
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+                return userRepository.save(user).map(entity->UserMapper.mapUserToUserResponse(entity));
+            });
     }
     
 }
