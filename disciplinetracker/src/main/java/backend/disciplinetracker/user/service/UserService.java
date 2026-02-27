@@ -1,6 +1,5 @@
 package backend.disciplinetracker.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,32 +19,32 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    
-    @Autowired
+
     private UserRepository userRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private JwtService jwtService;
 
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                        JwtService jwtService){
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public Mono<UserResponse> createUser(CreateUser createdUser){
-        return userRepository.existsByUsername(createdUser.getUsername())
+        return userRepository.findByUsername(createdUser.getUsername())
+            .switchIfEmpty(Mono.error(new UsernameAlreadyExistsException()))
             .flatMap(exists->{
-                if(exists){
-                    return Mono.error(new UsernameAlreadyExistsException());
-                }
                 User user = UserMapper.mapCreateUserToUser(createdUser);
                 user.setId(UUID.randomUUID().toString());
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
-                return userRepository.save(user).map(entity->UserMapper.mapUserToUserResponse(entity));
+                return userRepository.save(user).map(UserMapper::mapUserToUserResponse);
             });
     }
 
     public Mono<LoginResponse> login(LoginRequest loginRequest) {
         return userRepository.findByUsername(loginRequest.username())
-                .switchIfEmpty(Mono.error(new InvalidLoginException()))
+                
                 .flatMap(user->{
                     if(!passwordEncoder.matches(loginRequest.password(), user.getPassword())){
                         return Mono.error(new InvalidLoginException());
