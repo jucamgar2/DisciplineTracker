@@ -32,9 +32,11 @@ public class UserService {
     }
 
     public Mono<UserResponse> createUser(CreateUser createdUser){
-        return userRepository.findByUsername(createdUser.getUsername())
-            .switchIfEmpty(Mono.error(new UsernameAlreadyExistsException()))
+        return userRepository.existsByUsername(createdUser.getUsername())
             .flatMap(exists->{
+                if(exists){
+                    return Mono.error(new UsernameAlreadyExistsException());
+                }
                 User user = UserMapper.mapCreateUserToUser(createdUser);
                 user.setId(UUID.randomUUID().toString());
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -44,7 +46,7 @@ public class UserService {
 
     public Mono<LoginResponse> login(LoginRequest loginRequest) {
         return userRepository.findByUsername(loginRequest.username())
-                
+                .switchIfEmpty(Mono.error(new InvalidLoginException()))
                 .flatMap(user->{
                     if(!passwordEncoder.matches(loginRequest.password(), user.getPassword())){
                         return Mono.error(new InvalidLoginException());

@@ -23,7 +23,7 @@ public class ActivityService {
         Activity activity = new Activity(UUID.randomUUID().toString(), createActivity.activityName(), userId);
         return activityRepository.findActivityByNameAndUserId(createActivity.activityName(), userId)
                 .flatMap(a -> Mono.error(new DuplicatedActivityNameException()))
-                .switchIfEmpty(activityRepository.save(activity).map(a -> createActivity))
+                .switchIfEmpty(activityRepository.save(activity))
                 .map(a->createActivity);
     }
     

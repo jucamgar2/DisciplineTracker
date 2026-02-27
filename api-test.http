@@ -1,0 +1,99 @@
+@host = http://localhost:8080
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzcyMTg0ODc5LCJleHAiOjE3NzIxODU3Nzl9.odOnorfeJrAv7Ndex4qcvXFEezVblCMc4NSUv1Uo46w
+@refresh = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJpYXQiOjE3NzIxODQ4NzksImV4cCI6MTc3Mjc4OTY3OX0.m_3S2oXA9Rha7SVdllXIgKxlGLX75cq1pjncAl5reS4
+
+### -----------------------
+### USERS
+### -----------------------
+
+### new user
+POST {{host}}/users/new
+Content-Type: application/json
+
+{
+  "username": "Guaje",
+  "name": "Juan Jesús",
+  "lastName": "Campos Garrido",
+  "birthDate": "2002-01-02T23:00:00Z",
+  "password": "@Password123"
+} 
+
+### new user username in use
+POST {{host}}/users/new
+Content-Type: application/json
+
+{
+  "username": "Guaje",
+  "name": "Juan Jesús",
+  "lastName": "Campos Garrido",
+  "birthDate": "2002-01-02T23:00:00Z",
+  "password": "@Pasword123"
+} 
+
+### new user validation errors
+POST {{host}}/users/new
+Content-Type: application/json
+
+{
+  "username": "G",
+  "name": "J",
+  "lastName": "C",
+  "birthDate": "2052-01-02T23:00:00Z",
+  "password": "@"
+} 
+
+### login
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "username": "Guaje",
+  "password": "@Password123"
+} 
+
+### login user not exists
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "username": "G",
+  "password": "@Password123"
+} 
+
+### login password not correct
+POST {{host}}/users/login
+Content-Type: application/json
+
+{
+  "username": "Guaje",
+  "password": "@1"
+} 
+
+### refresh token
+POST {{host}}/users/login/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{refresh}}"
+}
+
+### -----------------------
+### ACTIVITIES
+### -----------------------
+### new activity 
+POST {{host}}/activities/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "activityName": "Gym"
+}
+
+### new activity same user and name
+POST {{host}}/activities/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "activityName": "Gym"
+}

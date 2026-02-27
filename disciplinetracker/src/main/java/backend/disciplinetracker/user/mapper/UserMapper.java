@@ -6,6 +6,8 @@ import backend.disciplinetracker.user.model.User;
 
 public class UserMapper {
 
+    private UserMapper(){}
+
     public static User mapCreateUserToUser(CreateUser created){
         return new User(null, created.getUsername(), created.getName(),
                      created.getLastName(), created.getBirthDate(), created.getPassword());
