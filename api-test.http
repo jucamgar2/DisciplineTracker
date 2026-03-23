@@ -1,5 +1,5 @@
 @host = http://localhost:8080
-@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzcyMTg0ODc5LCJleHAiOjE3NzIxODU3Nzl9.odOnorfeJrAv7Ndex4qcvXFEezVblCMc4NSUv1Uo46w
+@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzc0MjgzNDQzLCJleHAiOjE3NzQyODQzNDN9.wnnzUHn1Ll9H0-VyFt-KbRkHnceVp8CsdTh6Z9kwgXk
 @refresh = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJpYXQiOjE3NzIxODQ4NzksImV4cCI6MTc3Mjc4OTY3OX0.m_3S2oXA9Rha7SVdllXIgKxlGLX75cq1pjncAl5reS4
 
 ### -----------------------
@@ -97,3 +97,7 @@ Authorization: Bearer {{token}}
 {
   "activityName": "Gym"
 }
+
+### get all activities by user
+GET {{host}}/activities
+Authorization: Bearer {{token}}

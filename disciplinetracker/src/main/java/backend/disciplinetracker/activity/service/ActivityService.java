@@ -4,10 +4,12 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import backend.disciplinetracker.activity.dto.ActivityName;
 import backend.disciplinetracker.activity.dto.CreateActivity;
 import backend.disciplinetracker.activity.exception.DuplicatedActivityNameException;
 import backend.disciplinetracker.activity.model.Activity;
 import backend.disciplinetracker.activity.repository.ActivityRepository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -25,6 +27,11 @@ public class ActivityService {
                 .flatMap(a -> Mono.error(new DuplicatedActivityNameException()))
                 .switchIfEmpty(activityRepository.save(activity))
                 .map(a->createActivity);
+    }
+
+    public Flux<ActivityName> getAllActivities(String id) {
+        return activityRepository.findActivitiesByUserId(id)
+                .map(activity->new ActivityName(activity.getName()));
     }
     
 }
