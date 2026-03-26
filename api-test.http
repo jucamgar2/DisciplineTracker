@@ -1,5 +1,5 @@
 @host = http://localhost:8080
-@token = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzc0MjgzNDQzLCJleHAiOjE3NzQyODQzNDN9.wnnzUHn1Ll9H0-VyFt-KbRkHnceVp8CsdTh6Z9kwgXk
+@token =eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzc0NTQ5OTYwLCJleHAiOjE4NjQ1NDk5NjB9.KvNX_XNz_hA4L_MqGs7D4HLSOXDxA5s_MYXW0niJiWM
 @refresh = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJpYXQiOjE3NzIxODQ4NzksImV4cCI6MTc3Mjc4OTY3OX0.m_3S2oXA9Rha7SVdllXIgKxlGLX75cq1pjncAl5reS4
 
 ### -----------------------
@@ -95,9 +95,78 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "activityName": "Gym"
+  "activityName": "Fútbol"
 }
 
 ### get all activities by user
 GET {{host}}/activities
 Authorization: Bearer {{token}}
+
+### Save new activityTracks, if activtyTrack exists for date, it will be removed
+POST {{host}}/activities/track/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tracks": [
+    {
+      "activityId": "b8ceeb87-0d58-44e1-9473-6021f07528f6",
+      "dates":[
+        "2026-03-24",
+        "2026-03-23"
+      ]
+    },
+    {
+      "activityId": "bf6ff1f4-3187-42ab-9a21-7fa4d1e1244f",
+      "dates":[
+        "2026-03-24"
+      ]
+    }
+  ]
+}
+
+### Save new activityTracks, with diferent moth
+POST {{host}}/activities/track/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tracks": [
+    {
+      "activityId": "b8ceeb87-0d58-44e1-9473-6021f07528f6",
+      "dates":[
+        "2026-04-24",
+        "2026-03-23"
+      ]
+    },
+    {
+      "activityId": "bf6ff1f4-3187-42ab-9a21-7fa4d1e1244f",
+      "dates":[
+        "2026-05-24"
+      ]
+    }
+  ]
+}
+
+### Save new activityTracks, activity not exists
+POST {{host}}/activities/track/new
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tracks": [
+    {
+      "activityId": "a",
+      "dates":[
+        "2026-03-24",
+        "2026-03-23"
+      ]
+    },
+    {
+      "activityId": "v",
+      "dates":[
+        "2026-03-24"
+      ]
+    }
+  ]
+}

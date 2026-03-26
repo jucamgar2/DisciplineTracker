@@ -1,6 +1,6 @@
-package backend.disciplinetracker.activity.model;
+package backend.disciplinetracker.track.model;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,5 +22,5 @@ public class ActivityTrack {
 
     private String activityId;
 
-    private Instant date;
+    private LocalDate date;
 }
