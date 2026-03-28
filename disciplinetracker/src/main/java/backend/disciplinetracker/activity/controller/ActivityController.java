@@ -38,10 +38,17 @@ public class ActivityController {
     }
 
     @GetMapping("/detail/{id}")
-    public Mono<ActivityDetail> getActivityDetails( @PathVariable String id, @RequestParam(required = false) Integer year,
+    public Mono<ActivityDetail> getActivityDetails(@PathVariable String id, @RequestParam(required = false) Integer year,
      @RequestParam(required = false) Integer month, @AuthenticationPrincipal User user){
         
         return activityService.getActivityDetails(user.getId(), id, year, month);
+    }
+
+    @GetMapping("/detail")
+    public Flux<ActivityDetail> getActivitiesDetails(@RequestParam(required = false) Integer year,
+     @RequestParam(required = false) Integer month, @AuthenticationPrincipal User user){
+
+        return activityService.getActivitiesDetails(user.getId(), year, month);
     }
     
 }

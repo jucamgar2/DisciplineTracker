@@ -1,6 +1,6 @@
 @host = http://localhost:8080
 
-@token =eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZmY5MDA2Zi0xOTk4LTRmMDEtOGY1ZS1mMzIyYzlmNTY0NTkiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzc0NjEwODMwLCJleHAiOjE4NjQ2MTA4MzB9.IryWGtfW1V_J7WxLnmtnJidrixWY7tKqLRLn1U0YKzE
+@token =eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlZmY5MDA2Zi0xOTk4LTRmMDEtOGY1ZS1mMzIyYzlmNTY0NTkiLCJ1c2VybmFtZSI6Ikd1YWplIiwiaWF0IjoxNzc0NjkzMzYwLCJleHAiOjE4NjQ2OTMzNjB9.XsjZPnajlX8mR59fLpyhaomd73jhT7CSupxkEEFE6dw
 
 @refresh = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlNGVkZWNjNS05NDU1LTRiZmYtYWFhNi1mYmZkZmQ5MjA3Y2YiLCJpYXQiOjE3NzIxODQ4NzksImV4cCI6MTc3Mjc4OTY3OX0.m_3S2oXA9Rha7SVdllXIgKxlGLX75cq1pjncAl5reS4
 
@@ -52,4 +52,16 @@ Authorization: Bearer {{token}}
 
 ### get activity detail without info
 GET {{host}}/activities/detail/ec17ae2a-032e-49fc-8cdb-c86a097d3a2d
+Authorization: Bearer {{token}}
+
+### get activities details by month
+GET {{host}}/activities/detail?month=3
+Authorization: Bearer {{token}}
+
+### get activities details by month
+GET {{host}}/activities/detail?year=2025
+Authorization: Bearer {{token}}
+
+### get activities details without info
+GET {{host}}/activities/detail
 Authorization: Bearer {{token}}

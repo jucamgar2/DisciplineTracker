@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import backend.disciplinetracker.activity.dto.ActivityDetail;
 import backend.disciplinetracker.activity.dto.ActivityName;
+import backend.disciplinetracker.activity.dto.ActivityWithTracksDTO;
 import backend.disciplinetracker.activity.dto.CreateActivity;
 import backend.disciplinetracker.activity.exception.ActivityNotFoundException;
 import backend.disciplinetracker.activity.exception.ActivityNotFromUserException;
@@ -62,6 +63,7 @@ public class ActivityService {
             start = LocalDate.of(year, month, 1);
             end = start.withDayOfMonth(start.lengthOfMonth());
         }
+        
         Mono<Activity> activity = activityRepository.findById(activityId)
                 .switchIfEmpty(Mono.error(new ActivityNotFoundException()));
         Flux<ActivityTrack> activityTracks = 
@@ -74,6 +76,33 @@ public class ActivityService {
                     }
                     return Mono.just(new ActivityDetail(tuple.getT1().getName(), tuple.getT2().stream().map(ActivityTrack::getDate).toList()));
                 });
+    }
+
+    public Flux<ActivityDetail> getActivitiesDetails(String userId, Integer year, Integer month) {
+        LocalDate start = LocalDate.now();
+        LocalDate end;
+
+        year = year!=null?year:start.getYear();
+        if(year<0){
+            return Flux.error(new DateNotValidSelectedException());
+        }
+        if(month==null){
+            start = LocalDate.of(year, 1, 1);
+            end = LocalDate.of(year, 12, 31);
+        }else{
+            if(month>12||month<1){
+                return Flux.error(new DateNotValidSelectedException());
+            }
+            start = LocalDate.of(year, month, 1);
+            end = start.withDayOfMonth(start.lengthOfMonth());
+        }
+
+        return activityRepository.findActivitiesWithTracks(userId, start, end).map(this::mapActivityWithTrackToActivityDetail);
+    }
+
+    private ActivityDetail mapActivityWithTrackToActivityDetail(ActivityWithTracksDTO activityWithTracksDTO){
+        return new ActivityDetail(activityWithTracksDTO.getName(), activityWithTracksDTO.getTracks().stream()
+                        .map(ActivityTrack::getDate).toList());
     }
     
 }
