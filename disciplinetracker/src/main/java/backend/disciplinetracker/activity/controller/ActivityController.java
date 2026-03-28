@@ -2,11 +2,14 @@ package backend.disciplinetracker.activity.controller;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import backend.disciplinetracker.activity.dto.ActivityDetail;
 import backend.disciplinetracker.activity.dto.ActivityName;
 import backend.disciplinetracker.activity.dto.CreateActivity;
 import backend.disciplinetracker.activity.service.ActivityService;
@@ -32,6 +35,13 @@ public class ActivityController {
     @GetMapping
     public Flux<ActivityName> getAllActivities(@AuthenticationPrincipal User user){
         return activityService.getAllActivities(user.getId());
+    }
+
+    @GetMapping("/detail/{id}")
+    public Mono<ActivityDetail> getActivityDetails( @PathVariable String id, @RequestParam(required = false) Integer year,
+     @RequestParam(required = false) Integer month, @AuthenticationPrincipal User user){
+        
+        return activityService.getActivityDetails(user.getId(), id, year, month);
     }
     
 }

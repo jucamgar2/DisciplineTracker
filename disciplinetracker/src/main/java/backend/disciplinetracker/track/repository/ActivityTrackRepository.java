@@ -16,5 +16,7 @@ public interface ActivityTrackRepository extends ReactiveMongoRepository<Activit
     Mono<Void> deleteByActivityIdAndDate(String activityId, LocalDate date);
 
     Flux<ActivityTrack> findByActivityIdIn(List<String> activityId);
+
+    Flux<ActivityTrack> findByActivityIdAndDateBetween(String activityId, LocalDate start, LocalDate end);
     
 }
