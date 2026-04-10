@@ -1,0 +1,4 @@
+.register-container * {
+    all:unset;
+    display: revert;
+}
