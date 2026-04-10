@@ -1,6 +1,6 @@
 package backend.disciplinetracker.user.model;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,7 +28,7 @@ public class User {
 
     private String lastName;
 
-    private Instant birthDate;
+    private LocalDate birthDate;
 
     private String password;    
     

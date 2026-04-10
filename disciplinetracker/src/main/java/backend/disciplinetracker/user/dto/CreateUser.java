@@ -1,6 +1,6 @@
 package backend.disciplinetracker.user.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -30,7 +30,7 @@ public class CreateUser {
 
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     @Past(message = "La fecha de nacimiento debe ser pasada")
-    private Instant birthDate;
+    private LocalDate birthDate;
 
     @Pattern(
         regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,20}$",
