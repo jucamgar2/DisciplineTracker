@@ -1,19 +1,18 @@
+import { useSearchParams, useNavigate } from "react-router-dom"
+import LogoAndTitle from '../../components/LogoAndTitle'
 import { useState } from 'react'
-import { useNavigate } from "react-router-dom"
-import './Register.css'
 import SimpleInputWhite from '../../components/SimpleInputWhite'
 import SubmitButtonWhite from '../../components/SubmitButtonWhite'
-import LogoAndTitle from '../../components/LogoAndTitle'
 import PasswordInput from "../../components/PasswordInputWhite"
 
-const Register = () => {
+const Login = () =>{
     const API_URL = import.meta.env.VITE_API_URL;
+
+    const [searchParams] = useSearchParams();
+    const success = searchParams.get("success");
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [birthDate, setBirthDate] = useState("");
     const [errors, setErrors] = useState([]);
     const [serverError, setServerError] = useState("");
 
@@ -21,23 +20,20 @@ const Register = () => {
 
     const handleSubmit = async() =>{
         try{
-            const response = await fetch(`${API_URL}/users/new`,{
+            const response = await fetch(`${API_URL}/users/login`,{
                 method: "POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
                 body: JSON.stringify({
                     username,
-                    password,
-                    name,
-                    lastName,
-                    birthDate
+                    password
                 })
             });
             const data = await response.json(); 
             const status = response.status;
             if(status==200){
-                navigate("/login?success=true")
+                navigate("/")
             }else{
                 const errorsResponse = data.errors;
                 if(errorsResponse){
@@ -62,6 +58,10 @@ const Register = () => {
     return(
         <div className="bg-black text-white p-10 min-h-screen">
             <LogoAndTitle/>
+            {success &&<div className="text-center w-8/10  rounded-lg bg-white ml-[10%] h-8 flex items-center justify-center">
+                 <p className="text-black text-m ">Registro completado con exito</p>
+            </div>}
+            
             <div className='form-space' >
                 <form className=' pt-3 text-2xl grid gap-y-4' onSubmit={(e) => {
                     e.preventDefault();
@@ -79,36 +79,16 @@ const Register = () => {
                         placeholder={"Contraseña"}
                         error={errors.password}
                     />
-                    <SimpleInputWhite 
-                        value={name}
-                        onChange={(e)=> setName(e.target.value)}
-                        placeholder={"Nombre"}
-                        error={errors.name}
-                    />
-                    <SimpleInputWhite 
-                        value={lastName}
-                        onChange={(e)=> setLastName(e.target.value)}
-                        placeholder={"Apellido"}
-                        error={errors.lastName}
-                    />
-                    <SimpleInputWhite 
-                        value={birthDate}
-                        onChange={(e)=> setBirthDate(e.target.value)}
-                        type='date'
-                        placeholder={"Fecha de nacimiento"}
-                        error={errors.birthDate}
-                    />
                     <SubmitButtonWhite
-                        text={"Registrarse"}
+                        text={"Iniciar sesión"}
                     />
                     {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
                 </form>
             </div>
             
         </div>
-
-        
     )
+
 }
 
-export default Register;
+export default Login;
