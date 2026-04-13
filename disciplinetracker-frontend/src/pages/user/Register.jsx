@@ -102,7 +102,13 @@ const Register = () => {
                         text={"Registrarse"}
                     />
                     {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
+                    
                 </form>
+                <div className='text-center my-2'>
+                    <h2>¿Ya tienes una cuenta? </h2>
+                    <h2 className='underline'><a href='/login'>Iniciar sesión</a></h2>
+                </div>
+                
             </div>
             
         </div>

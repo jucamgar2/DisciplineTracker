@@ -4,6 +4,7 @@ import { useState } from 'react'
 import SimpleInputWhite from '../../components/SimpleInputWhite'
 import SubmitButtonWhite from '../../components/SubmitButtonWhite'
 import PasswordInput from "../../components/PasswordInputWhite"
+import { useAuth } from "../../components/AuthContext"
 
 const Login = () =>{
     const API_URL = import.meta.env.VITE_API_URL;
@@ -17,6 +18,8 @@ const Login = () =>{
     const [serverError, setServerError] = useState("");
 
     const navigate = useNavigate();
+
+    const {login} = useAuth();
 
     const handleSubmit = async() =>{
         try{
@@ -33,6 +36,7 @@ const Login = () =>{
             const data = await response.json(); 
             const status = response.status;
             if(status==200){
+                login(data.accessToken)
                 navigate("/")
             }else{
                 const errorsResponse = data.errors;
@@ -84,6 +88,11 @@ const Login = () =>{
                     />
                     {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
                 </form>
+                <div className='text-center my-2'>
+                    <h2>¿No tienes cuenta? </h2>
+                    <h2 className='underline'><a href='/register'>Registrarse</a></h2>
+                </div>
+
             </div>
             
         </div>

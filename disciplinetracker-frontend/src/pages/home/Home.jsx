@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import { useAuth } from '../../components/AuthContext';
 
 const Home = () => {
 
@@ -11,6 +12,7 @@ const Home = () => {
     monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1);
     console.log(monthName);
 
+    const { accessToken, logout } = useAuth();
 
     return (
         <div className='body-container'>
@@ -22,6 +24,7 @@ const Home = () => {
             <div>
                 <Link to='/register'>Ir a registro</Link>
             </div>
+            <h1>{accessToken}</h1>
         </div>
 
     );
