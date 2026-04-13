@@ -36,7 +36,7 @@ const Login = () =>{
             const data = await response.json(); 
             const status = response.status;
             if(status==200){
-                login(data.accessToken)
+                login(data.accessToken, data.refreshToken)
                 navigate("/")
             }else{
                 const errorsResponse = data.errors;
