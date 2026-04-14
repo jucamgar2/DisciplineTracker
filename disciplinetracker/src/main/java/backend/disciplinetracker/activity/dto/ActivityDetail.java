@@ -14,6 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ActivityDetail {
 
+    private String id;
+
     private String name;
 
     private List<LocalDate> tracks;

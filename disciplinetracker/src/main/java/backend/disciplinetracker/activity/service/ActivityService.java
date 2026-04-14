@@ -74,7 +74,7 @@ public class ActivityService {
                     if(!tuple.getT1().getUserId().equals(userId)){
                         return Mono.error(new ActivityNotFromUserException());
                     }
-                    return Mono.just(new ActivityDetail(tuple.getT1().getName(), tuple.getT2().stream().map(ActivityTrack::getDate).toList()));
+                    return Mono.just(new ActivityDetail(tuple.getT1().getId(), tuple.getT1().getName(), tuple.getT2().stream().map(ActivityTrack::getDate).toList()));
                 });
     }
 
@@ -101,7 +101,7 @@ public class ActivityService {
     }
 
     private ActivityDetail mapActivityWithTrackToActivityDetail(ActivityWithTracksDTO activityWithTracksDTO){
-        return new ActivityDetail(activityWithTracksDTO.getName(), activityWithTracksDTO.getTracks().stream()
+        return new ActivityDetail(activityWithTracksDTO.getId() ,activityWithTracksDTO.getName(), activityWithTracksDTO.getTracks().stream()
                         .map(ActivityTrack::getDate).toList());
     }
     
