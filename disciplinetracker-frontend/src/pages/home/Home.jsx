@@ -1,30 +1,46 @@
+import { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom'
+import ActivitiesToday from '../../components/home/ActivitiesToday';
+import WeeklyState from '../../components/home/WeeklyState';
 import { useAuth } from '../../components/AuthContext';
 
 const Home = () => {
+    const { accessToken } = useAuth();
+
+    const [monthlyActivities, setMonthlyActivities] = useState([]);
+
+    const API_URL = import.meta.env.VITE_API_URL;
 
     let date = new Date();
-    let year = date.getFullYear();
-    let day = date.getDay();
-    let dayName = date.toLocaleDateString("ES-es", {weekday: 'long'});
-    dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-    let monthName = date.toLocaleDateString("ES-es", {month:'long'})
-    monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1);
-    console.log(monthName);
+    let monthNumber = date.getMonth()+1;
 
-    const { accessToken, logout } = useAuth();
+    useEffect(() => {
+        const getActivitiesThisMonth = async() =>{
+            try{
+                const response = await fetch(`${API_URL}/activities/detail?month=${monthNumber}`,{
+                    method: "GET",
+                    headers:{
+                        "Content-Type":"application/json",
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                const data = await response.json();
+                setMonthlyActivities(data);
+            }catch{
+                
+            }
+        };
+        if(accessToken) getActivitiesThisMonth();
+    }, [accessToken]);
 
     return (
         <div className='body-container'>
-            <h1 className='text-2xl'>{dayName}, {day} de {monthName} de {year} </h1>
-            <ul>
-                <li>Gimnasio</li>
-            </ul>
-            <h2>ESTADO SEMANAL</h2>
-            <div>
-                <Link to='/register'>Ir a registro</Link>
-            </div>
-            <h1>{accessToken}</h1>
+            <ActivitiesToday 
+                monthlyActivities={monthlyActivities} 
+            />
+            <WeeklyState
+                monthlyActivities={monthlyActivities}
+            />
         </div>
 
     );
