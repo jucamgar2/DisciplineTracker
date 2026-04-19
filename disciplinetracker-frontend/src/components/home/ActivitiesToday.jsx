@@ -3,7 +3,7 @@ import { useAuth } from '../../components/AuthContext';
 import { CheckCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 
-const ActivitiesToday = ({monthlyActivities}) => {
+const ActivitiesToday = ({monthlyActivities, setMonthlyActivities}) => {
     const { accessToken } = useAuth();
 
     const [activities, setActivities] = useState([]);
@@ -58,6 +58,18 @@ const ActivitiesToday = ({monthlyActivities}) => {
                             ? { ...a, hasToday: !a.hasToday }
                             : a
                     )
+                );
+                setMonthlyActivities(prevMonthly =>
+                    prevMonthly.map(a => {
+                        if (a.id !== activity.id) return a;
+                        const hasToday = a.tracks.includes(today);
+                        return {
+                            ...a,
+                            tracks: hasToday
+                                ? a.tracks.filter(date => date !== today)
+                                : [...a.tracks, today] 
+                        };
+                    })
                 );
             }
         }catch{

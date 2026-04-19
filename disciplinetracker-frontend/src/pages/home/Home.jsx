@@ -36,7 +36,8 @@ const Home = () => {
     return (
         <div className='body-container'>
             <ActivitiesToday 
-                monthlyActivities={monthlyActivities} 
+                monthlyActivities={monthlyActivities}
+                setMonthlyActivities={setMonthlyActivities} 
             />
             <WeeklyState
                 monthlyActivities={monthlyActivities}
