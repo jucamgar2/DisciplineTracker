@@ -70,10 +70,10 @@ const WeeklyState = ({monthlyActivities}) => {
     });
 
     return(
-       <div className='h-[30vh] mt-2 text-[1.3rem] p-4'>
+       <div className='h-[25vh] mt-2 text-[1.3rem] p-4'>
             <h1 className="text-xl font-bold mb-2">ESTADO SEMANAL</h1>
 
-            <ResponsiveContainer width="100%" height="80%">
+            <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                     data={tasksPerDay}
                     margin={{ top: 10, right: 10, left: -40, bottom: 0 }}
