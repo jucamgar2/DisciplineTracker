@@ -79,10 +79,8 @@ export const AuthProvider = ({ children }) => {
         clearTokens();
       }
     };
-    if(delay<=0){
-      if(!isInitialLoadRef.current){
-        doRefresh();
-      }
+    if(delay <= 0){
+      doRefresh();
       return;
     }
 
