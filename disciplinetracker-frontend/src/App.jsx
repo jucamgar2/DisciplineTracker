@@ -3,8 +3,9 @@ import {Route, Routes} from 'react-router-dom'
 import Register from './pages/user/Register'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute"
 import LayoutWithFooter from './layouts/LayoutWihtFooter'
+import Activities from './pages/activities/Activities'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route element = {<LayoutWithFooter/>}>
             <Route path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
+            <Route path='/activities' element={<PrivateRoute><Activities/></PrivateRoute>}/>
           </Route>
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>

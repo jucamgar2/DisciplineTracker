@@ -11,10 +11,10 @@ const ActivitiesToday = ({monthlyActivities, setMonthlyActivities}) => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     let date = new Date();
-    let day = date.getDate()
+    let day = date.getDate();
     let dayName = date.toLocaleDateString("ES-es", {weekday: 'long'});
     dayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
-    let monthName = date.toLocaleDateString("ES-es", {month:'long'})
+    let monthName = date.toLocaleDateString("ES-es", {month:'long'});
     monthName = monthName.charAt(0).toUpperCase() + monthName.slice(1);
     
 

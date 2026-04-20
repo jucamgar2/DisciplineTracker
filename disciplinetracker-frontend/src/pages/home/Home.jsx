@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom'
 import ActivitiesToday from '../../components/home/ActivitiesToday';
 import WeeklyState from '../../components/home/WeeklyState';
 import { useAuth } from '../../components/AuthContext';
