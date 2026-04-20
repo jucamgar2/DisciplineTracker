@@ -42,7 +42,7 @@ public class ActivityService {
 
     public Flux<ActivityName> getAllActivities(String id) {
         return activityRepository.findActivitiesByUserId(id)
-                .map(activity->new ActivityName(activity.getName()));
+                .map(activity->new ActivityName(activity.getId(), activity.getName()));
     }
 
     public Mono<ActivityDetail> getActivityDetails(String userId, String activityId, Integer year, Integer month) {
