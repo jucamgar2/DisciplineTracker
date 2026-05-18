@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../components/AuthContext';
 import { ChartBarSquareIcon} from '@heroicons/react/24/outline';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import { Link } from "react-router-dom";
 
 const Activities = () => {
     const { accessToken } = useAuth();
@@ -31,7 +32,7 @@ const Activities = () => {
 
     return(
         <div className='body-container'>
-            <div className='h-[70vh] overflow-scroll bg-amber-400'>
+            <div className='h-[70vh] overflow-scroll '>
                 <h1 className='text-[1.9rem]'>Mis habitos</h1>
                 <div className='divide-y-1'>
                     {activities.map((activity =>(
@@ -43,7 +44,9 @@ const Activities = () => {
                 </div>
             </div>
             <div>
-                <PlusCircleIcon className='w-15 ml-auto mt-3'/>
+                <Link to='/activities/new'>
+                    <PlusCircleIcon className='w-15 ml-auto mt-3'/>
+                </Link>
             </div>
         </div>
     )

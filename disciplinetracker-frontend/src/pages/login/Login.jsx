@@ -48,7 +48,6 @@ const Login = () =>{
                         return acc;
                     }, {});
                     setErrors(formattedErrors);
-                    console.log(formattedErrors);
                 }else{
                     setServerError("Estamos teniendo problemas con el servidor, vuelve a intentarlo más adelante")
                 }
