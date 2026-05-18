@@ -37,7 +37,7 @@ public class ActivityService {
         return activityRepository.findActivityByNameAndUserId(createActivity.activityName(), userId)
                 .flatMap(a -> Mono.error(new DuplicatedActivityNameException()))
                 .switchIfEmpty(activityRepository.save(activity))
-                .map(a->createActivity);
+                .map(a->new CreateActivity(createActivity.activityName(), activity.getId()));
     }
 
     public Flux<ActivityName> getAllActivities(String id) {
