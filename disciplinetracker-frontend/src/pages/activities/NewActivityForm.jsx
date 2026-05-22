@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAuth } from '../../components/AuthContext';
 import SimpleInputBlack from '../../components/SimpleInputBlack';
 import SubmitButtonBlack from '../../components/SubmitButtonBlack';
@@ -10,11 +10,8 @@ const NewActivityForm = () => {
     const API_URL = import.meta.env.VITE_API_URL;
 
     let year = new Date().getFullYear();
-    console.log(year);
     let monthNumber = new Date().getMonth()+1;
-    console.log(monthNumber);
     const daysInMonth = new Date(year, monthNumber, 0 ).getDate();
-    console.log(daysInMonth);
     const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     let monthName = new Date().toLocaleDateString("ES-es", {month:'long'});
     const [errors, setErrors] = useState([]);
@@ -48,10 +45,11 @@ const NewActivityForm = () => {
             });
             const status = response.status;
             const data = await response.json(); 
+            console.log(response);
             if(status==200){
                 const id = data.id;
                 const trackDates = tracks.map((day) => {
-                    const date = new Date(year, monthNumber, day);
+                    const date = new Date(year, monthNumber-1, day);
                     return date.toISOString().split("T")[0];
                 });
                 const bodyData = {

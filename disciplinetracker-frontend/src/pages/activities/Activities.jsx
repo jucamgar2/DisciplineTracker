@@ -35,12 +35,14 @@ const Activities = () => {
             <div className='h-[70vh] overflow-scroll '>
                 <h1 className='text-[1.9rem]'>Mis habitos</h1>
                 <div className='divide-y-1'>
-                    {activities.map((activity =>(
-                        <div key={activity.id} className='flex h-[8vh] items-center'>
-                            <p className='text-3xl ml-2 mt-1.5 font-medium'>{activity.activityName}</p>
-                            <ChartBarSquareIcon className='w-9 ml-auto'/>
-                        </div>
-                    )))}
+                    {activities.map(activity => (
+                        <Link key={activity.id} to={`/activities/${activity.id}`}>
+                            <div className='flex h-[8vh] items-center'>
+                                <p className='text-3xl ml-2 mt-1.5 font-medium'>{activity.activityName}</p>
+                                <ChartBarSquareIcon className='w-9 ml-auto'/>
+                            </div>
+                        </Link>
+                    ))}
                 </div>
             </div>
             <div>

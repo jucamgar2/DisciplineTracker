@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute"
 import LayoutWithFooter from './layouts/LayoutWihtFooter'
 import Activities from './pages/activities/Activities'
 import NewActivityForm from './pages/activities/NewActivityForm'
+import ActivityDetail from './pages/activities/ActivityDetail'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
             <Route path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
             <Route path='/activities' element={<PrivateRoute><Activities/></PrivateRoute>}/>
             <Route path='/activities/new' element={<PrivateRoute><NewActivityForm/></PrivateRoute>}/>
+            <Route path='/activities/:id' element={<PrivateRoute><ActivityDetail/></PrivateRoute>}/>
           </Route>
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
