@@ -34,7 +34,7 @@ public class UserService {
     public Mono<UserResponse> createUser(CreateUser createdUser){
         return userRepository.existsByUsername(createdUser.getUsername())
             .flatMap(exists->{
-                if(exists){
+                if(Boolean.TRUE.equals(exists)){
                     return Mono.error(new UsernameAlreadyExistsException());
                 }
                 User user = UserMapper.mapCreateUserToUser(createdUser);
@@ -63,6 +63,11 @@ public class UserService {
         return userRepository.findById(claims.getSubject())
                 .map(user->jwtService.generateAccessToken(user))
                 .map(accessToken->new LoginResponse(accessToken, refreshToken));
+    }
+
+    public Mono<UserResponse> getUser(User user) {
+        return userRepository.findByUsername(user.getUsername())
+                .map(UserMapper::mapUserToUserResponse);
     }
     
 }

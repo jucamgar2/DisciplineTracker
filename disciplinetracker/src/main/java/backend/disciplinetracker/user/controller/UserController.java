@@ -1,5 +1,7 @@
 package backend.disciplinetracker.user.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,7 @@ import backend.disciplinetracker.user.dto.LoginRequest;
 import backend.disciplinetracker.user.dto.LoginResponse;
 import backend.disciplinetracker.user.dto.RefreshRequest;
 import backend.disciplinetracker.user.dto.UserResponse;
+import backend.disciplinetracker.user.model.User;
 import backend.disciplinetracker.user.service.UserService;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
@@ -37,5 +40,10 @@ public class UserController {
     @PostMapping("/login/refresh")
     public Mono<LoginResponse> refresh(@RequestBody RefreshRequest refreshRequest){
         return userService.refreshToken(refreshRequest.refreshToken());
+    }
+
+    @GetMapping("/detail")
+    public Mono<UserResponse> getUser(@AuthenticationPrincipal User user){
+        return userService.getUser(user);
     }
 }
