@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, useParams  } from "react-router-dom"
+import { Link , useSearchParams, useParams  } from "react-router-dom"
 import { useAuth } from '../../components/AuthContext';
 import SubmitButtonBlack from '../../components/SubmitButtonBlack';
 
@@ -156,6 +156,10 @@ const ActivityDetail = () =>{
                                 ))}
                             </select>
                         </label>
+                        <Link  className='text-[1.2rem] text-center cursor-pointer'
+                            to={`/activities/${id}/annual`}>
+                            Ver reporte anual
+                        </Link>
                     </div>
 
                     </form>
