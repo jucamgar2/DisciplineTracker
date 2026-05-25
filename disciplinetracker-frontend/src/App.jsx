@@ -8,7 +8,7 @@ import LayoutWithFooter from './layouts/LayoutWihtFooter'
 import Activities from './pages/activities/Activities'
 import NewActivityForm from './pages/activities/NewActivityForm'
 import ActivityDetail from './pages/activities/ActivityDetail'
-import ActivityDetailByYear from './pages/activities/ActicityDetailByYear'
+import ActivityDetailByYear from './pages/activities/ActivityDetailByYear'
 
 function App() {
 
