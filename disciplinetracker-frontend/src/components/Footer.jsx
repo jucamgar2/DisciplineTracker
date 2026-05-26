@@ -30,13 +30,15 @@ const Footer = () => {
                 <p>Mis hábitos</p>
             </button>
         </Link>
-        <button className="flex flex-col items-center">
-            {inProfile?
-                <UserIcon className="w-8" />:
-                <UserCircleIcon className="w-8" />
-            }
-            <p>Perfil</p>
-        </button>
+        <Link to='/user/detail'  onClick={() => setPage("Profile")}>
+            <button className="flex flex-col items-center">
+                {inProfile?
+                    <UserIcon className="w-8" />:
+                    <UserCircleIcon className="w-8" />
+                }
+                <p>Perfil</p>
+            </button>
+        </Link>
     </footer>
     )
 

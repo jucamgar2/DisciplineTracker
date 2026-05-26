@@ -9,6 +9,7 @@ import Activities from './pages/activities/Activities'
 import NewActivityForm from './pages/activities/NewActivityForm'
 import ActivityDetail from './pages/activities/ActivityDetail'
 import ActivityDetailByYear from './pages/activities/ActivityDetailByYear'
+import Profile from './pages/user/Profile'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             <Route path='/activities/new' element={<PrivateRoute><NewActivityForm/></PrivateRoute>}/>
             <Route path='/activities/:id' element={<PrivateRoute><ActivityDetail/></PrivateRoute>}/>
             <Route path='/activities/:id/annual' element={<PrivateRoute><ActivityDetailByYear/></PrivateRoute>}/>
+            <Route path='/user/detail' element={<PrivateRoute><Profile/></PrivateRoute>}/>
           </Route>
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>

@@ -25,7 +25,6 @@ const ActivityDetailByYear = () =>{
                     },
                 });
                 const data = await response.json();
-                console.log(data);
                 setActivityName(data.name);
                 setTracks(data.tracks);
             }catch(error){
