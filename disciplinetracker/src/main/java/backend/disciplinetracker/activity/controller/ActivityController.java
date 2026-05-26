@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import backend.disciplinetracker.activity.dto.ActivityDetail;
 import backend.disciplinetracker.activity.dto.ActivityName;
 import backend.disciplinetracker.activity.dto.CreateActivity;
+import backend.disciplinetracker.activity.dto.MonthlyTrackCount;
 import backend.disciplinetracker.activity.service.ActivityService;
 import backend.disciplinetracker.user.model.User;
 import reactor.core.publisher.Flux;
@@ -50,5 +51,11 @@ public class ActivityController {
 
         return activityService.getActivitiesDetails(user.getId(), year, month);
     }
-    
+
+    @GetMapping("/track/monthly")
+    public Flux<MonthlyTrackCount> getTracksByMont(@RequestParam(required = false) Integer year,
+                    @AuthenticationPrincipal User user){
+        
+        return activityService.getTracksByMont(user.getId(), year);
+    }    
 }

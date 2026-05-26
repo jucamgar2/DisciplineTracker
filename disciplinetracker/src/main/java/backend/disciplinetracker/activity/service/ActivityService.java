@@ -1,7 +1,11 @@
 package backend.disciplinetracker.activity.service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
 
@@ -9,6 +13,7 @@ import backend.disciplinetracker.activity.dto.ActivityDetail;
 import backend.disciplinetracker.activity.dto.ActivityName;
 import backend.disciplinetracker.activity.dto.ActivityWithTracksDTO;
 import backend.disciplinetracker.activity.dto.CreateActivity;
+import backend.disciplinetracker.activity.dto.MonthlyTrackCount;
 import backend.disciplinetracker.activity.exception.ActivityNotFoundException;
 import backend.disciplinetracker.activity.exception.ActivityNotFromUserException;
 import backend.disciplinetracker.activity.exception.DateNotValidSelectedException;
@@ -22,6 +27,9 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class ActivityService {
+
+    private static final List<String> SHORT_MONTH_NAMES = List.of(
+        "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic");
 
     private ActivityRepository activityRepository;
 
@@ -103,6 +111,43 @@ public class ActivityService {
     private ActivityDetail mapActivityWithTrackToActivityDetail(ActivityWithTracksDTO activityWithTracksDTO){
         return new ActivityDetail(activityWithTracksDTO.getId() ,activityWithTracksDTO.getName(), activityWithTracksDTO.getTracks().stream()
                         .map(ActivityTrack::getDate).toList());
+    }
+
+    public Flux<MonthlyTrackCount> getTracksByMont(String id, Integer year) {
+        LocalDate now = LocalDate.now();
+        year = year!=null ? year: now.getYear();
+        if(year<0){
+            return Flux.error(new DateNotValidSelectedException());
+        }
+        LocalDate start = LocalDate.of(year, 1, 1);
+        LocalDate end = LocalDate.of(year, 12, 31);
+        return activityRepository.findActivitiesByUserId(id)
+                .map(Activity::getId)
+                .collectList()
+                .flatMapMany(activityIds->{
+                    if(activityIds.isEmpty()){
+                        return Flux.fromIterable(emptyYearMonthlySummary());
+                    }
+                    return activityTrackRepository.findByActivityIdInAndDateBetween(activityIds, start, end)
+                            .collectList()
+                            .flatMapMany(tracks->{
+                                Map<Integer, Long> tracksByMonth = tracks.stream()
+                                    .collect((Collectors.groupingBy(
+                                        track->track.getDate().getMonthValue(),
+                                        Collectors.counting())));
+                                List<MonthlyTrackCount> monthlySummary = IntStream.rangeClosed(1, 12)
+                                    .mapToObj(month-> new MonthlyTrackCount(SHORT_MONTH_NAMES.get(month-1), tracksByMonth.getOrDefault(month, 0l)))
+                                    .toList();
+                                return Flux.fromIterable(monthlySummary);
+                            });
+                });
+    }
+
+    private List<MonthlyTrackCount> emptyYearMonthlySummary() {
+        return IntStream.rangeClosed(1, 12)
+                .mapToObj(month->new MonthlyTrackCount(SHORT_MONTH_NAMES.get(month-1), 0l))
+                .toList();
+            
     }
     
 }
