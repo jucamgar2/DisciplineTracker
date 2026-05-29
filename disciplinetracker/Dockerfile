@@ -16,4 +16,4 @@ COPY --from=build /workspace/target/*.jar /app/app.jar
 ENV PORT=8080
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT} -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "export SPRING_DATA_MONGODB_URI=${SPRING_DATA_MONGODB_URI:-$MONGODB_URI}; java -Dserver.port=${PORT} -jar /app/app.jar"]
