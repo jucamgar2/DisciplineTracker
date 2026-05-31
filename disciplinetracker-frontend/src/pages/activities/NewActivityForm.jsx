@@ -47,6 +47,9 @@ const NewActivityForm = () => {
             const data = await response.json(); 
             console.log(response);
             if(status==200){
+                if(tracks.length<1){
+                    navigate("/activities");
+                }
                 const id = data.id;
                 const trackDates = tracks.map((day) => {
                     const date = new Date(year, monthNumber-1, day);
@@ -70,7 +73,7 @@ const NewActivityForm = () => {
                 });
                 const statusTracks = responseTracks.status;
                 if(statusTracks == 200){
-                    navigate("/activities")
+                    navigate("/activities");
                 }
             }else{
                 const errorsResponse = data.errors;
