@@ -82,7 +82,7 @@ const ActivitiesToday = ({monthlyActivities, setMonthlyActivities}) => {
             <h1 className='text-[1.9rem]'>{dayName}, {day} de {monthName}</h1>
             <div className="p-4">
                 {activities.map((activity) => (
-                    <div key={activity.id} className='flex h-[6vh]'>
+                    <div key={activity.id} className='flex items-start gap-2 py-2'>
                         <button className="cursor-pointer transition-transform hover:scale-110 active:scale-95" onClick={() => completeActivity(activity)}>
                             {activity.hasToday ? 
                             (<div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">

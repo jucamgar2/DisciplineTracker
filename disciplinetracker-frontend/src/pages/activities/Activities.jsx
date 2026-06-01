@@ -37,9 +37,9 @@ const Activities = () => {
                 <div className='divide-y-1'>
                     {activities.map(activity => (
                         <Link key={activity.id} to={`/activities/${activity.id}`}>
-                            <div className='flex h-[8vh] items-center'>
+                            <div className='flex items-start gap-2 py-3'>
                                 <p className='text-3xl ml-2 mt-1.5 font-medium'>{activity.activityName}</p>
-                                <ChartBarSquareIcon className='w-9 ml-auto'/>
+                                <ChartBarSquareIcon className='w-9 h-9 ml-auto shrink-0 mt-1'/>
                             </div>
                         </Link>
                     ))}
