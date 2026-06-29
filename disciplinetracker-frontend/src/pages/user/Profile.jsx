@@ -111,7 +111,7 @@ const Profile = () => {
                 <div className="mt-6">
                     <h2 className="text-xl">Estadísticas globales</h2>
                     <h3 className="font-light">Racha del mes: {streak}</h3>
-                    <h3 className="font-light">Habitos completados(mensuales): {compPorc}%</h3>
+                    <h3 className="font-light">Hábitos completados(mensuales): {compPorc}%</h3>
                 </div>
                 <div className="mt-6">
                     <h2 className="text-xl">Progreso anual</h2>
