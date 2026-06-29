@@ -7,5 +7,14 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server:{
     host: true
+  },
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.js',
+    css: true,
   }
 })

@@ -115,5 +115,3 @@ VITE_API_URL=
 
 run the command npm install
 run the command npm run dev
-
-## Testing
